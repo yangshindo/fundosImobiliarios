@@ -1,0 +1,26 @@
+import { StyleSheet } from "react-native";
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "#fff",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  card: {
+    borderRadius: 6,
+    elavation: 3,
+    backgroundColor: "#fff",
+    shadowOffset: {width: 1, height: 1},
+    shadowOpacity: 0.5,
+    shadowRadius: 2,
+    marginHorizontal: 4,
+    marginVertical: 6
+  },
+  cardtext: {
+    fontFamily: "Impact",
+    color: "red"
+  }
+});
+
+export default styles;
