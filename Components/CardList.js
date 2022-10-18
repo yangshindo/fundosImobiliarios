@@ -8,14 +8,22 @@ export default function CardList() {
     { nome: "HGRU11", rendimento: 0.82, recebido: 8.2 },
   ];
 
+  var formatter = new Intl.NumberFormat('pt-BR', {
+    style: 'currency',
+    currency: 'BRL',
+  });
+
+  formatter.format
+
+
   const Item = (props) => (
     <View style={styles.container}>
       <View style={styles.row}>
         <Text style={styles.nome}>{props.nome}</Text>
-        <Text style={styles.recebidoValue}>R$ {props.recebido}</Text>
+        <Text style={styles.recebidoValue}>{formatter.format(props.recebido)}</Text>
       </View>
       <View style={styles.row}>
-        <Text style={styles.rendimento}>Rendimento R$ {props.rendimento}</Text>
+        <Text style={styles.rendimento}>Rendimento {formatter.format(props.recebido)}</Text>
         <Text style={styles.recebidoText}>RECEBIDO</Text>
       </View>
       <View>
@@ -41,7 +49,7 @@ export default function CardList() {
       shadowRadius: 3,
       marginVertical: 7,
       textAlign: "center",
-      backgroundColor: "#94B49F"
+      backgroundColor: "#94B49F",
     },
     row: {
       flexDirection: "row",
@@ -53,11 +61,11 @@ export default function CardList() {
     nome: {
       fontFamily: "Impact",
       fontSize: 33,
-      color: "#1c1c1c"
+      color: "#1c1c1c",
     },
     rendimento: {
-      fontSize: 18,
-      color: "#1c1c1c"
+      fontSize: 17,
+      color: "#1c1c1c",
     },
     recebidoValue: {
       color: "#FEF9A7",
@@ -69,13 +77,13 @@ export default function CardList() {
       borderColor: "#FFF7E9",
       borderWidth: 1.5,
       borderRadius: 4,
-      padding: 2
+      padding: 2,
     },
     detalhesText: {
       backgroundColor: "#FEF9A7",
       fontWeight: "500",
-      color: "#303030"
-    }
+      color: "#303030",
+    },
   });
 
   return (

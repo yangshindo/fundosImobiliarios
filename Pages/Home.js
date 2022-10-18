@@ -17,22 +17,22 @@ export default function Home() {
       justifyContent: "center",
     },
     cardListView: {
-        paddingHorizontal: 22
+      paddingHorizontal: 22,
     },
     proventosText: {
-        fontSize: 14,
-        fontWeight: 500,
-        textAlign: "center",
-        color: "#104a07",
+      fontSize: 14,
+      fontWeight: 500,
+      textAlign: "center",
+      color: "#104a07",
     },
     proventosValue: {
-        fontSize: 80,
-        fontFamily: "Impact",
-        fontWeight: 300,
-        color: "#104a07",
-        paddingTop: 1,
-        paddingBottom: 4
-    }
+      fontSize: 80,
+      fontFamily: "Impact",
+      fontWeight: 300,
+      color: "#104a07",
+      paddingTop: 1,
+      paddingBottom: 4,
+    },
   });
 
   return (
@@ -41,9 +41,7 @@ export default function Home() {
         <Text style={styles.proventosText}>
           PROVENTOS DE {currentMonth} DE {currentYear}{" "}
         </Text>
-        <Text style={styles.proventosValue}>
-            R$ 27.02
-        </Text>
+        <Text style={styles.proventosValue}>R$ 27,02</Text>
       </View>
       <View style={styles.cardListView}>
         <CardList />

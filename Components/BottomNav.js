@@ -1,54 +1,34 @@
-import * as React from 'react';
-import { StyleSheet } from 'react-native';
-import { Appbar, FAB, useTheme } from 'react-native-paper';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import React from "react";
+import { AppBar, IconButton, HStack } from "@react-native-material/core";
+import Icon from "@expo/vector-icons/MaterialCommunityIcons";
 
-const BOTTOM_APPBAR_HEIGHT = 80;
-const MEDIUM_FAB_HEIGHT = 56;
-
-export default function BottomNav() {
-  const { bottom } = useSafeAreaInsets();
-  const theme = useTheme();
-
-  return (
-    <Appbar
-      style={[
-        styles.bottom,
-        {
-          height: BOTTOM_APPBAR_HEIGHT + bottom,
-          backgroundColor: theme.colors.elevation.level2,
-        },
-      ]}
-      safeAreaInsets={{ bottom }}
-    >
-      <Appbar.Action icon="archive" onPress={() => {}} />
-      <Appbar.Action icon="email" onPress={() => {}} />
-      <Appbar.Action icon="label" onPress={() => {}} />
-      <Appbar.Action icon="delete" onPress={() => {}} />
-      <FAB
-        mode="flat"
-        size="medium"
-        icon="plus"
-        onPress={() => {}}
-        style={[
-          styles.fab,
-          { top: (BOTTOM_APPBAR_HEIGHT - MEDIUM_FAB_HEIGHT) / 2 },
-        ]}
+const BottomNav = () => (
+  <AppBar
+    variant="bottom"
+    color="#f7f6b0"
+    tintColor="#2a5e21"
+    title="Fundos Imobiliários"
+    leading={props => (
+      <IconButton icon={props => <Icon name="home" {...props} size={40}/>} {...props} />
+    )}
+    trailing={props => (
+      <HStack>
+      <IconButton
+        icon={props => <Icon name="chart-line" {...props} size={40}/>}
+        {...props}     
       />
-    </Appbar>
-  );
-};
+            <IconButton
+        icon={props => <Icon name="folder" {...props} size={40}/>}
+        {...props}     
+      />
+      </HStack>
 
-const styles = StyleSheet.create({
-  bottom: {
-    backgroundColor: 'aquamarine',
-    position: 'absolute',
-    left: 0,
-    right: 0,
-    bottom: 0,
-  },
-  fab: {
-    position: 'absolute',
-    right: 16,
-  },
-});
+    )}
+    style={{ position: "absolute", start: 0, end: 0, bottom: 0}}
+  >
+    
+    
+  </AppBar>
+);
+
+export default BottomNav;
