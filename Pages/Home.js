@@ -1,5 +1,7 @@
-import { StyleSheet, Text, View, ScrollView, FlatList } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import CardList from "../Components/CardList";
+import { AppBar, IconButton, HStack } from "@react-native-material/core";
+import Icon from "@expo/vector-icons/MaterialCommunityIcons";
 
 export default function Home() {
   const d = new Date();
@@ -38,6 +40,7 @@ export default function Home() {
   return (
     <View style={styles.body}>
       <View style={styles.container}>
+      <IconButton icon={props => <Icon name="cash-multiple" {...props} color="#104a07" size={30} />} />
         <Text style={styles.proventosText}>
           PROVENTOS DE {currentMonth} DE {currentYear}{" "}
         </Text>
@@ -49,3 +52,4 @@ export default function Home() {
     </View>
   );
 }
+
