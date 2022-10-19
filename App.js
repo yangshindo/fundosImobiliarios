@@ -15,7 +15,7 @@ export default function App() {
     <SafeAreaView style={styles.body}>
       <StatusBar />
       <FundosContextProvider>
-        <Fundos />
+        <Home />
         <BottomNav />
       </FundosContextProvider>
     </SafeAreaView>

@@ -1,19 +1,15 @@
-import React from "react";
+import { useContext } from "react";
 import { View, FlatList, StyleSheet, Text } from "react-native";
+import { FundosContext } from "../Contexts/FundosContext";
 
 export default function CardList() {
-  const listaFundos = [
-    { nome: "BLMG11", rendimento: 0.8, recebido: 8.0 },
-    { nome: "CPTS11", rendimento: 1.1, recebido: 11.0 },
-    { nome: "HGRU11", rendimento: 0.82, recebido: 8.2 },
-  ];
+
+  const { fundosDummyList } = useContext(FundosContext)
 
   var formatter = new Intl.NumberFormat('pt-BR', {
     style: 'currency',
     currency: 'BRL',
   });
-
-  formatter.format
 
 
   const Item = (props) => (
@@ -88,7 +84,7 @@ export default function CardList() {
 
   return (
     <FlatList
-      data={listaFundos}
+      data={fundosDummyList}
       renderItem={renderItem}
       keyExtractor={(item) => item.nome}
     />
