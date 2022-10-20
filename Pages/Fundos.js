@@ -5,7 +5,7 @@ import { StyleSheet, Text, View, FlatList } from "react-native";
 
 function Fundos() {
   const [searchQuery, setSearchQuery] = useState("");
-  const { fundosDummyList } = useContext(FundosContext);
+  const { fundosDummyList, setFundosDummyList } = useContext(FundosContext);
 
   function onChangeSearch(query) {
     setSearchQuery(query);
@@ -15,21 +15,27 @@ function Fundos() {
     fundosDummyList.find((element) => element === query);
   }
 
-  const Item = (props) => (
+  function deleteItemById(id) {
+    console.log(id);
+    const filteredData = fundosDummyList.filter(item => item.nome !== id);
+  setFundosDummyList(filteredData);
+  }
+
+  function renderItem ({ item }) { 
+    return (
     <View style={styles.container}>
       <View style={styles.row}>
-        <Text>{props.nome}</Text>
+        <Text>{item.nome}</Text>
+        <View style={styles.row}>
+          <IconButton icon="file-document-edit" onPress={() => deleteItemById(item.nome)} />
+        </View>
       </View>
       <View style={styles.row}>
-        <Text>{props.cotas}</Text>
-      </View>
-      <View style={styles.row}>
-        <IconButton icon="file-document-edit" />
+        <Text>Número de cotas: {item.cotas}</Text>
       </View>
     </View>
   );
-
-  const renderItem = ({ item }) => <Item nome={item.nome} cotas={item.cotas} />;
+}
 
   const styles = StyleSheet.create({
     container: {
@@ -40,6 +46,7 @@ function Fundos() {
       shadowRadius: 3,
       marginVertical: 7,
       textAlign: "center",
+      backgroundColor: "white",
     },
     row: {
       flexDirection: "row",
