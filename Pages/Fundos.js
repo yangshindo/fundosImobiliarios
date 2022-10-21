@@ -1,41 +1,84 @@
-import { useState, useContext } from "react";
-import { Searchbar, FAB, IconButton } from "react-native-paper";
+import React, { useState, useContext } from "react";
+import {
+  Searchbar,
+  IconButton,
+  Dialog,
+  Portal,
+  Paragraph,
+  Button,
+  TextInput
+} from "react-native-paper";
 import { FundosContext } from "../Contexts/FundosContext";
 import { StyleSheet, Text, View, FlatList } from "react-native";
 
 function Fundos() {
+
   const [searchQuery, setSearchQuery] = useState("");
-  const { fundosDummyList, setFundosDummyList } = useContext(FundosContext);
+
+  const [visible, setVisible] = useState(false);
+  const showDialog = () => setVisible(true);
+  const hideDialog = () => setVisible(false);
+
+  const [cotasValue, setCotasValue] = useState(1)
+  const [editCotas, setEditCotas] = useState(false)
+
+  const { fundosDBList } = useContext(FundosContext);
+  const { fundosUserList, setFundosUserList } = useContext(FundosContext);
 
   function onChangeSearch(query) {
     setSearchQuery(query);
   }
 
   function searchFunction() {
-    fundosDummyList.find((element) => element === query);
+    const fundoSelecionado = fundosDBList.find((item) => item.nome === searchQuery);
+    if (fundoSelecionado) {
+      setFundosUserList((prevValue) => [...prevValue, fundoSelecionado]);
+    console.log(fundosUserList)
+    } else {
+      showDialog();
+    }
   }
 
   function deleteItemById(id) {
-    console.log(id);
-    const filteredData = fundosDummyList.filter(item => item.nome !== id);
-  setFundosDummyList(filteredData);
+    const filteredData = fundosUserList.filter((item) => item.nome !== id);
+    setFundosUserList(filteredData);
   }
 
-  function renderItem ({ item }) { 
+  function editItemById(id) {
+    const updatedList = fundosUserList.map((item) => {
+      if (item.nome === id) {
+        item.cotas = cotasValue
+      }
+    })
+    setFundosUserList(updatedList)
+  }
+
+  function renderItem({ item }) {
     return (
-    <View style={styles.container}>
-      <View style={styles.row}>
-        <Text>{item.nome}</Text>
+      <View style={styles.container}>
         <View style={styles.row}>
-          <IconButton icon="file-document-edit" onPress={() => deleteItemById(item.nome)} />
+          <Text>{item.nome}</Text>
+          <View style={styles.row}>
+            <IconButton
+              icon="file-document-edit"
+              onPress={() => setEditCotas(true)}
+            />
+             <IconButton
+              icon="delete"
+              onPress={() => deleteItemById(item.nome)}
+            />
+          </View>
+        </View>
+        <View style={styles.row}>
+          {editCotas ? <React.Fragment><TextInput label="Número de cotas" value={cotasValue} onChangeText={cotasValue => setCotasValue(cotasValue)}/><IconButton
+    icon="arrow-right"
+    onPress={() => setEditCotas(false)}
+  /></React.Fragment> : <Text>Número de cotas: {item.cotas}</Text>}
+
         </View>
       </View>
-      <View style={styles.row}>
-        <Text>Número de cotas: {item.cotas}</Text>
-      </View>
-    </View>
-  );
-}
+    );
+  }
 
   const styles = StyleSheet.create({
     container: {
@@ -60,12 +103,9 @@ function Fundos() {
       fontSize: 33,
       color: "#1c1c1c",
     },
-    fab: {
-      position: "absolute",
-      margin: 0,
-      right: 0,
-      bottom: 0,
-    },
+    dialogtitle: {
+      fontFamily: "Roboto"
+    }
   });
 
   return (
@@ -74,18 +114,24 @@ function Fundos() {
         placeholder="Procurar Fundo"
         onChangeText={onChangeSearch}
         value={searchQuery}
-      />
-      <FAB
-        label="Adicionar"
-        icon="plus"
-        style={styles.fab}
-        onPress={() => console.log("Pressed")}
+        onIconPress={searchFunction}
       />
       <FlatList
-        data={fundosDummyList}
+        data={fundosUserList}
         renderItem={renderItem}
         keyExtractor={(item) => item.nome}
       />
+       <Portal>
+          <Dialog visible={visible} onDismiss={hideDialog}>
+            <Dialog.Title style={styles.dialogtitle}>Fundo não encontrado</Dialog.Title>
+            <Dialog.Content>
+              <Paragraph>O nome do fundo que você digitou está incorreto ou o fundo já faz parte de sua carteira.</Paragraph>
+            </Dialog.Content>
+            <Dialog.Actions>
+              <Button onPress={hideDialog}>Fechar</Button>
+            </Dialog.Actions>
+          </Dialog>
+        </Portal>
     </View>
   );
 }
