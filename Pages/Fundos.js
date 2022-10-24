@@ -6,7 +6,8 @@ import {
   Portal,
   Paragraph,
   Button,
-  TextInput
+  TextInput,
+  Provider
 } from "react-native-paper";
 import { FundosContext } from "../Contexts/FundosContext";
 import { StyleSheet, Text, View, FlatList } from "react-native";
@@ -45,12 +46,9 @@ function Fundos() {
   }
 
   function editItemById(id) {
-    const updatedList = fundosUserList.map((item) => {
-      if (item.nome === id) {
-        item.cotas = cotasValue
-      }
-    })
-    setFundosUserList(updatedList)
+    const foundItem = fundosUserList.find((item) => item.nome === id);
+    foundItem.cotas = cotasValue
+    setEditCotas(false)
   }
 
   function renderItem({ item }) {
@@ -72,7 +70,7 @@ function Fundos() {
         <View style={styles.row}>
           {editCotas ? <React.Fragment><TextInput label="Número de cotas" value={cotasValue} onChangeText={cotasValue => setCotasValue(cotasValue)}/><IconButton
     icon="arrow-right"
-    onPress={() => setEditCotas(false)}
+    onPress={() => editItemById(item.nome)}
   /></React.Fragment> : <Text>Número de cotas: {item.cotas}</Text>}
 
         </View>
@@ -81,6 +79,12 @@ function Fundos() {
   }
 
   const styles = StyleSheet.create({
+    body: {
+      flex: 1,
+      alignItems: "center",
+      justifyContent: "space-evenly",
+      margin: 1
+    },
     container: {
       borderRadius: 6,
       elavation: 3,
@@ -110,6 +114,7 @@ function Fundos() {
 
   return (
     <View>
+      <View style={styles.body}>
       <Searchbar
         placeholder="Procurar Fundo"
         onChangeText={onChangeSearch}
@@ -132,6 +137,7 @@ function Fundos() {
             </Dialog.Actions>
           </Dialog>
         </Portal>
+        </View>
     </View>
   );
 }
