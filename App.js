@@ -1,9 +1,9 @@
-import Home from "./Pages/Home";
-import { SafeAreaView, StyleSheet, StatusBar } from "react-native-web";
+import { StyleSheet } from "react-native";
 import { Provider as PaperProvider } from 'react-native-paper';
-import BottomNav from "./Components/BottomNav";
 import FundosContextProvider from "./Contexts/FundosContext";
-import Fundos from "./Pages/Fundos";
+import Routes from "./Pages/Routes";
+
+
 
 export default function App() {
   const styles = StyleSheet.create({
@@ -13,14 +13,10 @@ export default function App() {
   });
 
   return (
-    <SafeAreaView style={styles.body}>
-      <StatusBar />
       <FundosContextProvider>
         <PaperProvider>
-        <Fundos />
-        <BottomNav />
+          <Routes />
         </PaperProvider>
       </FundosContextProvider>
-    </SafeAreaView>
   );
 }

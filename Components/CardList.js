@@ -2,9 +2,9 @@ import { useContext } from "react";
 import { View, FlatList, StyleSheet, Text } from "react-native";
 import { FundosContext } from "../Contexts/FundosContext";
 
-export default function CardList() {
+function CardList() {
 
-  const { fundosDummyList } = useContext(FundosContext)
+  const { fundosUserList } = useContext(FundosContext)
 
   var formatter = new Intl.NumberFormat('pt-BR', {
     style: 'currency',
@@ -84,9 +84,11 @@ export default function CardList() {
 
   return (
     <FlatList
-      data={fundosDummyList}
+      data={fundosUserList}
       renderItem={renderItem}
       keyExtractor={(item) => item.nome}
     />
   );
 }
+
+export default CardList

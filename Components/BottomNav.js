@@ -1,16 +1,16 @@
 import { useState } from "react";
 import { BottomNavigation, Text } from 'react-native-paper';
-import Icon from "@expo/vector-icons/MaterialCommunityIcons";
 
-function BottomNav() { 
+
+function BottomNav({ navigation }) { 
 
   const [index, setIndex] = useState(0);
 
-const HomeRoute = () => <Text>Início</Text>;
+const HomeRoute = () => <Text onPress={() => navigation.navigate(Home)}>Início</Text>;
 
-const FundosRoute = () => <Text>Fundos</Text>;
+const FundosRoute = () => <Text onPress={() => navigation.navigate(Fundos)}>Fundos</Text>;
 
-const CompararRoute = () => <Text>Comparar</Text>;
+const CompararRoute = () => <Text onPress={() => navigation.navigate(Graficos)}>Comparar</Text>;
 
 
   const [routes] = useState([

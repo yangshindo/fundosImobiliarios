@@ -6,11 +6,11 @@ import {
   Portal,
   Paragraph,
   Button,
-  TextInput,
-  Provider
+  TextInput
 } from "react-native-paper";
 import { FundosContext } from "../Contexts/FundosContext";
 import { StyleSheet, Text, View, FlatList } from "react-native";
+import BottomNav from "../Components/BottomNav";
 
 function Fundos() {
 

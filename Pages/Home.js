@@ -1,9 +1,9 @@
 import { StyleSheet, Text, View } from "react-native";
 import CardList from "../Components/CardList";
-import { AppBar, IconButton, HStack } from "@react-native-material/core";
+import BottomNav from "../Components/BottomNav";
 import Icon from "@expo/vector-icons/MaterialCommunityIcons";
 
-export default function Home() {
+function Home() {
   const d = new Date();
   const currentMonth = d
     .toLocaleString("default", { month: "long" })
@@ -13,6 +13,9 @@ export default function Home() {
 
 
   const styles = StyleSheet.create({
+    body: {
+      margin: 2
+    },
     container: {
       flex: 1,
       alignItems: "center",
@@ -40,7 +43,7 @@ export default function Home() {
   return (
     <View style={styles.body}>
       <View style={styles.container}>
-      <IconButton icon={props => <Icon name="cash-multiple" {...props} color="#104a07" size={30} />} />
+       <Icon name="cash-multiple" />
         <Text style={styles.proventosText}>
           PROVENTOS DE {currentMonth} DE {currentYear}{" "}
         </Text>
@@ -53,3 +56,4 @@ export default function Home() {
   );
 }
 
+export default Home
