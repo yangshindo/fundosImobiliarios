@@ -3,23 +3,25 @@ import { View, FlatList, StyleSheet, Text } from "react-native";
 import { FundosContext } from "../Contexts/FundosContext";
 
 function CardList() {
+  const { fundosUserList } = useContext(FundosContext);
 
-  const { fundosUserList } = useContext(FundosContext)
-
-  var formatter = new Intl.NumberFormat('pt-BR', {
-    style: 'currency',
-    currency: 'BRL',
+  var formatter = new Intl.NumberFormat("pt-BR", {
+    style: "currency",
+    currency: "BRL",
   });
-
 
   const Item = (props) => (
     <View style={styles.container}>
       <View style={styles.row}>
         <Text style={styles.nome}>{props.nome}</Text>
-        <Text style={styles.recebidoValue}>{formatter.format(props.recebido)}</Text>
+        <Text style={styles.recebidoValue}>
+          {formatter.format(props.recebido)}
+        </Text>
       </View>
       <View style={styles.row}>
-        <Text style={styles.rendimento}>Rendimento {formatter.format(props.recebido)}</Text>
+        <Text style={styles.rendimento}>
+          Rendimento {formatter.format(props.recebido)}
+        </Text>
         <Text style={styles.recebidoText}>RECEBIDO</Text>
       </View>
       <View>
@@ -91,4 +93,4 @@ function CardList() {
   );
 }
 
-export default CardList
+export default CardList;

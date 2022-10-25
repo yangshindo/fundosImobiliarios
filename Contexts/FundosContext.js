@@ -9,9 +9,14 @@ function FundosContextProvider(props) {
     { nome: "HGRU11", rendimento: 0.82, recebido: 8.2, cotas: 1, pago: false },
   ]);
 
-  const  [fundosUserList, setFundosUserList ] = useState([])
+  const [fundosUserList, setFundosUserList] = useState([]);
 
-  const value = { fundosDBList, setFundosDBList, fundosUserList, setFundosUserList};
+  const value = {
+    fundosDBList,
+    setFundosDBList,
+    fundosUserList,
+    setFundosUserList,
+  };
 
   return (
     <FundosContext.Provider value={value}>

@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View } from "react-native";
 import CardList from "../Components/CardList";
-import BottomNav from "../Components/BottomNav";
+import BackgroundColorProvider from "../Components/BackgroundColorProvider";
 import Icon from "@expo/vector-icons/MaterialCommunityIcons";
 
 function Home() {
@@ -11,10 +11,9 @@ function Home() {
     .toUpperCase();
   const currentYear = d.getFullYear().toString();
 
-
   const styles = StyleSheet.create({
     body: {
-      margin: 2
+      margin: 10,
     },
     container: {
       flex: 1,
@@ -25,6 +24,7 @@ function Home() {
       paddingHorizontal: 22,
     },
     proventosText: {
+      marginTop: 10,
       fontSize: 14,
       fontWeight: 500,
       textAlign: "center",
@@ -41,9 +41,10 @@ function Home() {
   });
 
   return (
+    <BackgroundColorProvider>
     <View style={styles.body}>
       <View style={styles.container}>
-       <Icon name="cash-multiple" />
+        <Icon name="cash-multiple" size={30} color="#104a07" />
         <Text style={styles.proventosText}>
           PROVENTOS DE {currentMonth} DE {currentYear}{" "}
         </Text>
@@ -53,7 +54,8 @@ function Home() {
         <CardList />
       </View>
     </View>
+    </BackgroundColorProvider>
   );
 }
 
-export default Home
+export default Home;

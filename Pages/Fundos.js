@@ -6,22 +6,21 @@ import {
   Portal,
   Paragraph,
   Button,
-  TextInput
+  TextInput,
 } from "react-native-paper";
 import { FundosContext } from "../Contexts/FundosContext";
 import { StyleSheet, Text, View, FlatList } from "react-native";
-import BottomNav from "../Components/BottomNav";
+import BackgroundColorProvider from "../Components/BackgroundColorProvider";
 
 function Fundos() {
-
   const [searchQuery, setSearchQuery] = useState("");
 
   const [visible, setVisible] = useState(false);
   const showDialog = () => setVisible(true);
   const hideDialog = () => setVisible(false);
 
-  const [cotasValue, setCotasValue] = useState(1)
-  const [editCotas, setEditCotas] = useState(false)
+  const [cotasValue, setCotasValue] = useState(1);
+  const [editCotas, setEditCotas] = useState(false);
 
   const { fundosDBList } = useContext(FundosContext);
   const { fundosUserList, setFundosUserList } = useContext(FundosContext);
@@ -31,10 +30,12 @@ function Fundos() {
   }
 
   function searchFunction() {
-    const fundoSelecionado = fundosDBList.find((item) => item.nome === searchQuery);
+    const fundoSelecionado = fundosDBList.find(
+      (item) => item.nome === searchQuery
+    );
     if (fundoSelecionado) {
       setFundosUserList((prevValue) => [...prevValue, fundoSelecionado]);
-    console.log(fundosUserList)
+      console.log(fundosUserList);
     } else {
       showDialog();
     }
@@ -47,8 +48,8 @@ function Fundos() {
 
   function editItemById(id) {
     const foundItem = fundosUserList.find((item) => item.nome === id);
-    foundItem.cotas = cotasValue
-    setEditCotas(false)
+    foundItem.cotas = cotasValue;
+    setEditCotas(false);
   }
 
   function renderItem({ item }) {
@@ -61,18 +62,28 @@ function Fundos() {
               icon="file-document-edit"
               onPress={() => setEditCotas(true)}
             />
-             <IconButton
+            <IconButton
               icon="delete"
               onPress={() => deleteItemById(item.nome)}
             />
           </View>
         </View>
         <View style={styles.row}>
-          {editCotas ? <React.Fragment><TextInput label="Número de cotas" value={cotasValue} onChangeText={cotasValue => setCotasValue(cotasValue)}/><IconButton
-    icon="arrow-right"
-    onPress={() => editItemById(item.nome)}
-  /></React.Fragment> : <Text>Número de cotas: {item.cotas}</Text>}
-
+          {editCotas ? (
+            <React.Fragment>
+              <TextInput
+                label="Número de cotas"
+                value={cotasValue}
+                onChangeText={(cotasValue) => setCotasValue(cotasValue)}
+              />
+              <IconButton
+                icon="arrow-right"
+                onPress={() => editItemById(item.nome)}
+              />
+            </React.Fragment>
+          ) : (
+            <Text>Número de cotas: {item.cotas}</Text>
+          )}
         </View>
       </View>
     );
@@ -80,10 +91,7 @@ function Fundos() {
 
   const styles = StyleSheet.create({
     body: {
-      flex: 1,
-      alignItems: "center",
-      justifyContent: "space-evenly",
-      margin: 1
+      margin: 10,
     },
     container: {
       borderRadius: 6,
@@ -108,37 +116,44 @@ function Fundos() {
       color: "#1c1c1c",
     },
     dialogtitle: {
-      fontFamily: "Roboto"
-    }
+      fontFamily: "Roboto",
+    },
   });
 
   return (
-    <View>
-      <View style={styles.body}>
-      <Searchbar
-        placeholder="Procurar Fundo"
-        onChangeText={onChangeSearch}
-        value={searchQuery}
-        onIconPress={searchFunction}
-      />
-      <FlatList
-        data={fundosUserList}
-        renderItem={renderItem}
-        keyExtractor={(item) => item.nome}
-      />
-       <Portal>
+    <BackgroundColorProvider>
+    <View style={styles.body}>
+      <View>
+        <Searchbar
+          placeholder="Procurar Fundo"
+          onChangeText={onChangeSearch}
+          value={searchQuery}
+          onIconPress={searchFunction}
+        />
+        <FlatList
+          data={fundosUserList}
+          renderItem={renderItem}
+          keyExtractor={(item) => item.nome}
+        />
+        <Portal>
           <Dialog visible={visible} onDismiss={hideDialog}>
-            <Dialog.Title style={styles.dialogtitle}>Fundo não encontrado</Dialog.Title>
+            <Dialog.Title style={styles.dialogtitle}>
+              Fundo não encontrado
+            </Dialog.Title>
             <Dialog.Content>
-              <Paragraph>O nome do fundo que você digitou está incorreto ou o fundo já faz parte de sua carteira.</Paragraph>
+              <Paragraph>
+                O nome do fundo que você digitou está incorreto ou o fundo já
+                faz parte de sua carteira.
+              </Paragraph>
             </Dialog.Content>
             <Dialog.Actions>
               <Button onPress={hideDialog}>Fechar</Button>
             </Dialog.Actions>
           </Dialog>
         </Portal>
-        </View>
+      </View>
     </View>
+    </BackgroundColorProvider>
   );
 }
 
