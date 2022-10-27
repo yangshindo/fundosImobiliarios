@@ -17,31 +17,36 @@ function Graficos() {
 
   function SelectorPicker() {
     return(
-        <View >
+        <View style={styles.picker}>
         <Picker
           selected={selectedValue}
-          style={{ height: 30, width: 150}}
+          style={{ height: 30, width: 100, textAlign: "center" }}
           onValueChange={(itemValue) => setSelectedValue(itemValue)}
         >
            {selectOption}
         </Picker>
-        <Button onPress={chartGenerator}></Button>
       </View>
     )
   }
 
+  /*
   function chartGenerator(itemValue) {
     const chartItem = (fundosDBList.find((item) => item.nome === selectedValue))
     setChartValue([chartItem.janeiro, chartItem.fevereiro, chartItem.marco, chartItem.abril, chartItem.maio, chartItem.junho])
     console.log(chartValue[0])
   }
+  */
 
 
 
   return (
     <BackgroundColorProvider>
     <View style={styles.body}>
+    <View style={styles.box}>
+    <Text style={styles.selecionarfundo}>Selecione um fundo para acompanhar: </Text>
+
       <SelectorPicker />
+      </View>
       <Text style={styles.title}>Histórico de Rendimento</Text>
       <LineChart
         data={{
@@ -53,12 +58,12 @@ function Graficos() {
           ],
         }}
         width={350} // from react-native
-        height={350}
+        height={450}
         yAxisLabel="R$"
         chartConfig={{
-          backgroundColor: "#e26a00",
-          backgroundGradientFrom: "#fb8c00",
-          backgroundGradientTo: "#ffa726",
+          backgroundColor: "#61855a",
+          backgroundGradientFrom: "#61855a",
+          backgroundGradientTo: "#7ea177",
           color: (opacity = 0.5) => `rgba(255, 255, 255, ${opacity})`,
           labelColor: (opacity = 0.5) => `rgba(255, 255, 255, ${opacity})`,
           style: {
@@ -67,10 +72,11 @@ function Graficos() {
           propsForDots: {
             r: "6",
             strokeWidth: "2",
-            stroke: "#ffa726",
+            stroke: "#7ea177",
           },
         }}
       />
+ 
     </View>
     </BackgroundColorProvider>
   );
@@ -85,12 +91,34 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   title: {
-    margin: 10,
+    margin: 20,
     fontSize: 30,
     fontWeight: 500,
     textAlign: "center",
     color: "#104a07",
   },
+  selecionarfundo: {
+    fontSize: 20,
+    fontWeight: 500,
+    textAlign: "center",
+    color: "#104a07",
+  },
+  picker: {
+    margin: 10,
+    borderWidth: 6,
+    borderRadius: 7,
+    borderColor: "#7ea177"
+  },
+  box: {
+    borderRadius: 6,
+    elavation: 3,
+    shadowOffset: { width: 1, height: 1 },
+    shadowOpacity: 0.7,
+    shadowRadius: 3,
+    marginVertical: 7,
+    textAlign: "center",
+    backgroundColor: "#94B49F",
+  }
 });
 
 export default Graficos;

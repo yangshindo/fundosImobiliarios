@@ -62,7 +62,7 @@ function CardList() {
       color: "#1c1c1c",
     },
     rendimento: {
-      fontSize: 17,
+      fontSize: 12,
       color: "#1c1c1c",
     },
     recebidoValue: {

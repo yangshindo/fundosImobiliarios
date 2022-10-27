@@ -50,6 +50,7 @@ function Fundos() {
     const foundItem = fundosUserList.find((item) => item.nome === id);
     foundItem.cotas = cotasValue;
     setEditCotas(false);
+    setCotasValue(1)
   }
 
   function renderItem({ item }) {
@@ -60,7 +61,7 @@ function Fundos() {
           <View style={styles.row}>
             <IconButton
               icon="file-document-edit"
-              onPress={() => setEditCotas(true)}
+              onPress={() => setEditCotas(item.nome)}
             />
             <IconButton
               icon="delete"
@@ -69,7 +70,7 @@ function Fundos() {
           </View>
         </View>
         <View style={styles.row}>
-          {editCotas ? (
+          {editCotas === item.nome ? (
             <React.Fragment>
               <TextInput
                 label="Número de cotas"
