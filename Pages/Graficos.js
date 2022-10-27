@@ -53,7 +53,7 @@ function Graficos() {
           labels: ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun"],
           datasets: [
             {
-              data: [1, 2, 3, 4, 5, 6]
+              data: [0.80, 1.11, 0.97, 0.91, 0.90, 0.86]
             },
           ],
         }}
@@ -85,9 +85,10 @@ function Graficos() {
 
 const styles = StyleSheet.create({
   body: {
-    margin: 10,
+    border: 15,
     flexDirection: "column",
     alignItems: "center",
+    justifyContent: "center",
     flex: 1,
   },
   title: {
@@ -98,16 +99,17 @@ const styles = StyleSheet.create({
     color: "#104a07",
   },
   selecionarfundo: {
-    fontSize: 20,
+    fontSize: 17,
     fontWeight: 500,
     textAlign: "center",
     color: "#104a07",
   },
   picker: {
     margin: 10,
-    borderWidth: 6,
-    borderRadius: 7,
-    borderColor: "#7ea177"
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "center",
+    flex: 1,
   },
   box: {
     borderRadius: 6,
@@ -118,6 +120,7 @@ const styles = StyleSheet.create({
     marginVertical: 7,
     textAlign: "center",
     backgroundColor: "#94B49F",
+    padding: 10
   }
 });
 

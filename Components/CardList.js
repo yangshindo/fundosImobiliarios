@@ -19,10 +19,13 @@ function CardList() {
         </Text>
       </View>
       <View style={styles.row}>
+        <View style={styles.column}>
         <Text style={styles.rendimento}>
-          Rendimento {formatter.format(props.recebido)}
+          Rendimento 
         </Text>
-        <Text style={styles.recebidoText}>RECEBIDO</Text>
+        <Text>{formatter.format(props.rendimento)}</Text>
+        </View>
+        {props.pago === 1 ? <Text style={styles.recebidoText}>RECEBIDO</Text> : <Text style={styles.aguardandoText}>NÃO RECEBIDO</Text>}
       </View>
       <View>
         <Text style={styles.detalhesText}>Mais Detalhes</Text>
@@ -35,6 +38,7 @@ function CardList() {
       nome={item.nome}
       rendimento={item.rendimento}
       recebido={item.recebido}
+      pago={item.pago}
     />
   );
 
@@ -49,6 +53,10 @@ function CardList() {
       textAlign: "center",
       backgroundColor: "#94B49F",
     },
+    column: {
+      flexDirection: "column",
+      alignItems: "center",
+    },
     row: {
       flexDirection: "row",
       alignItems: "center",
@@ -62,7 +70,7 @@ function CardList() {
       color: "#1c1c1c",
     },
     rendimento: {
-      fontSize: 12,
+      fontSize: 16,
       color: "#1c1c1c",
     },
     recebidoValue: {
@@ -77,10 +85,19 @@ function CardList() {
       borderRadius: 4,
       padding: 2,
     },
+    aguardandoText: {
+      fontSize: 22,
+      color: "black",
+      borderColor: "black",
+      borderWidth: 1.5,
+      borderRadius: 4,
+      padding: 2,
+    },
     detalhesText: {
       backgroundColor: "#FEF9A7",
-      fontWeight: "500",
+      fontWeight: "600",
       color: "#303030",
+      padding: 3
     },
   });
 

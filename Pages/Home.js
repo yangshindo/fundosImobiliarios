@@ -48,7 +48,7 @@ function Home() {
         <Text style={styles.proventosText}>
           PROVENTOS DE {currentMonth} DE {currentYear}{" "}
         </Text>
-        <Text style={styles.proventosValue}>R$ 27,02</Text>
+        <Text style={styles.proventosValue}>R$ 26,30</Text>
       </View>
       <View style={styles.cardListView}>
         <CardList />

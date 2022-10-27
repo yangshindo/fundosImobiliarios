@@ -57,7 +57,7 @@ function Fundos() {
     return (
       <View style={styles.container}>
         <View style={styles.row}>
-          <Text>{item.nome}</Text>
+          <Text style={styles.nome}>{item.nome}</Text>
           <View style={styles.row}>
             <IconButton
               icon="file-document-edit"
@@ -102,7 +102,7 @@ function Fundos() {
       shadowRadius: 3,
       marginVertical: 7,
       textAlign: "center",
-      backgroundColor: "white",
+      backgroundColor: "#b9bdb5",
     },
     row: {
       flexDirection: "row",
