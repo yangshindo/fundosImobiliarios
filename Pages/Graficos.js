@@ -12,7 +12,7 @@ function Graficos() {
   const [selectedValue, setSelectedValue] = useState();
   const [chartValue, setChartValue] = useState()
 
-  const selectOption = fundosUserList.map((fundo) => <Picker.Item label={fundo.nome} value={fundo.nome} key={fundo.nome} />)
+  const selectOption = fundosUserList.map((fundo) => <Picker.Item label={fundo.title} value={fundo.title} key={fundo.title} />)
 
 
   function SelectorPicker() {
@@ -31,7 +31,7 @@ function Graficos() {
 
   /*
   function chartGenerator(itemValue) {
-    const chartItem = (fundosDBList.find((item) => item.nome === selectedValue))
+    const chartItem = (fundosDBList.find((item) => item.title === selectedValue))
     setChartValue([chartItem.janeiro, chartItem.fevereiro, chartItem.marco, chartItem.abril, chartItem.maio, chartItem.junho])
     console.log(chartValue[0])
   }
@@ -43,17 +43,17 @@ function Graficos() {
     <BackgroundColorProvider>
     <View style={styles.body}>
     <View style={styles.box}>
-    <Text style={styles.selecionarfundo}>Selecione um fundo para acompanhar: </Text>
+    <Text style={styles.selecionarfundo}>Fundo </Text>
 
       <SelectorPicker />
       </View>
       <Text style={styles.title}>Histórico de Rendimento</Text>
       <LineChart
         data={{
-          labels: ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun"],
+          labels: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"],
           datasets: [
             {
-              data: [0.80, 1.11, 0.97, 0.91, 0.90, 0.86]
+              data: [0.80, 1.11, 0.97, 0.91, 0.90, 0.89, 1.02, 1.11, 0.97, 0.96, 0.84, 0.88]
             },
           ],
         }}
@@ -103,6 +103,8 @@ const styles = StyleSheet.create({
     fontWeight: 500,
     textAlign: "center",
     color: "#104a07",
+    fontFamily: "Roboto",
+    fontWeight: 550
   },
   picker: {
     margin: 10,
@@ -119,7 +121,7 @@ const styles = StyleSheet.create({
     shadowRadius: 3,
     marginVertical: 7,
     textAlign: "center",
-    backgroundColor: "#94B49F",
+    backgroundColor: "#7ea177",
     padding: 10
   }
 });
