@@ -1,6 +1,6 @@
 import { Text, View, StyleSheet, Picker } from "react-native";
 import { useState, useContext } from "react";
-import { Button } from 'react-native-paper'
+import { Button, Menu } from 'react-native-paper'
 
 import { FundosContext } from "../Contexts/FundosContext";
 import BackgroundColorProvider from "../Components/BackgroundColorProvider";
@@ -11,50 +11,39 @@ function Graficos() {
   const { fundosUserList } = useContext(FundosContext);
 
   // Select / Picker state, render item e functional component
-  const [selectedValue, setSelectedValue] = useState(fundosUserList[0].title);
+  const [menuVisible, setMenuVisible] = useState(false)
+  const openMenu = () => setMenuVisible(true);
+  const closeMenu = () => setMenuVisible(false);
+  const [selectedValue, setSelectedValue] = useState(fundosUserList[0]);
   const [chartData, setChartData] = useState()
 
-  const selectOption = fundosUserList.map((fundo) => (
-    <Picker.Item label={fundo.title} value={fundo.title} key={fundo.title} />
+  const menuOption = fundosUserList.map((el) => (
+    <Menu.Item title={el.title} key={el.title} onPress={() => onValueChage(el)} />
   ));
 
-  function onValueChage() {
-    const item = fundosUserList.find((i) => i.title === selectedValue)
+  function onValueChage(el) {
+    setSelectedValue(el)
+    const item = fundosUserList.find((i) => i === el)
     console.log(item)
-    setChartData([item.mes1, item.mes2, item.mes3, item.mes4, item.mes5, item.mes6])
+    if (item) {setChartData([item.mes1, item.mes2, item.mes3, item.mes4, item.mes5, item.mes6])}
+    closeMenu()
   }
-
-  function SelectorPicker() {
-    return (
-      <View style={styles.picker}>
-        <Picker
-          style={{textAlign: "center" }}
-          onValueChange={(itemValue) => setSelectedValue(itemValue)}
-        >
-          {selectOption}
-        </Picker>
-        
-      </View>
-    );
-  }
-
-     /*
-    const item = fundosUserList.find((i) => i.name === selectedValue)
-    let chartData = [item.mes1, item.mes2, item.mes3, item.mes4, item.mes5, item.mes6]
-    */
-
-
 
   return (
     <BackgroundColorProvider>
       <View style={styles.body}>
         <View style={styles.box}>
-          <Text style={styles.selecionarfundo}>Selecione um fundo para acompanhar o histórico de rendimento nos últimos 6 meses </Text>
-          <SelectorPicker />
-          <Button icon={'form-select'} textColor="#104a07" onPress={onValueChage}>Selecionar Fundo</Button>
+          <Text style={styles.boxtext}>Selecione um fundo para acompanhar o histórico de rendimento nos últimos 6 meses </Text>
+          <Menu
+          visible={menuVisible}
+          onDismiss={closeMenu}
+          anchor={<Button icon={'form-select'} textColor="#104a07" buttonColor="#f8ffc7" onPress={openMenu} mode="outlined">Selecionar</Button>}>
+{menuOption}
+        </Menu>
         </View>
        
         <Text style={styles.title}>Histórico de Rendimento</Text>
+       
         {chartData ? <Chart data={chartData} /> : null}
       </View>
     </BackgroundColorProvider>
@@ -76,8 +65,9 @@ const styles = StyleSheet.create({
     textAlign: "center",
     color: "#104a07",
   },
-  selecionarfundo: {
-    fontSize: 14,
+  boxtext: {
+    padding: 10,
+    fontSize: 18,
     fontWeight: 500,
     textAlign: "center",
     color: "#104a07",
