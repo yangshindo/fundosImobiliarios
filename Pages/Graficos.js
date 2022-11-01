@@ -1,87 +1,65 @@
-import { Text, View, StyleSheet, Picker, Button } from "react-native";
-import { useState, useContext } from "react"
-import { LineChart } from "react-native-chart-kit";
+import { Text, View, StyleSheet, Picker } from "react-native";
+import { useState, useContext } from "react";
+import { Button } from 'react-native-paper'
+
 import { FundosContext } from "../Contexts/FundosContext";
 import BackgroundColorProvider from "../Components/BackgroundColorProvider";
-import { select } from "@react-native-material/core";
+import Chart from "../Components/Chart";
 
 function Graficos() {
+  // Context
+  const { fundosUserList } = useContext(FundosContext);
 
-  const { fundosUserList, fundosDBList } = useContext(FundosContext)
+  // Select / Picker state, render item e functional component
+  const [selectedValue, setSelectedValue] = useState(fundosUserList[0].title);
+  const [chartData, setChartData] = useState()
 
-  const [selectedValue, setSelectedValue] = useState();
-  const [chartValue, setChartValue] = useState()
+  const selectOption = fundosUserList.map((fundo) => (
+    <Picker.Item label={fundo.title} value={fundo.title} key={fundo.title} />
+  ));
 
-  const selectOption = fundosUserList.map((fundo) => <Picker.Item label={fundo.title} value={fundo.title} key={fundo.title} />)
-
+  function onValueChage() {
+    const item = fundosUserList.find((i) => i.title === selectedValue)
+    console.log(item)
+    setChartData([item.mes1, item.mes2, item.mes3, item.mes4, item.mes5, item.mes6])
+  }
 
   function SelectorPicker() {
-    return(
-        <View style={styles.picker}>
+    return (
+      <View style={styles.picker}>
         <Picker
-          selected={selectedValue}
-          style={{ height: 30, width: 100, textAlign: "center" }}
+          style={{textAlign: "center" }}
           onValueChange={(itemValue) => setSelectedValue(itemValue)}
         >
-           {selectOption}
+          {selectOption}
         </Picker>
+        
       </View>
-    )
+    );
   }
 
-  /*
-  function chartGenerator(itemValue) {
-    const chartItem = (fundosDBList.find((item) => item.title === selectedValue))
-    setChartValue([chartItem.janeiro, chartItem.fevereiro, chartItem.marco, chartItem.abril, chartItem.maio, chartItem.junho])
-    console.log(chartValue[0])
-  }
-  */
+     /*
+    const item = fundosUserList.find((i) => i.name === selectedValue)
+    let chartData = [item.mes1, item.mes2, item.mes3, item.mes4, item.mes5, item.mes6]
+    */
 
 
 
   return (
     <BackgroundColorProvider>
-    <View style={styles.body}>
-    <View style={styles.box}>
-    <Text style={styles.selecionarfundo}>Fundo </Text>
-
-      <SelectorPicker />
+      <View style={styles.body}>
+        <View style={styles.box}>
+          <Text style={styles.selecionarfundo}>Selecione um fundo para acompanhar o histórico de rendimento nos últimos 6 meses </Text>
+          <SelectorPicker />
+          <Button icon={'form-select'} textColor="#104a07" onPress={onValueChage}>Selecionar Fundo</Button>
+        </View>
+       
+        <Text style={styles.title}>Histórico de Rendimento</Text>
+        {chartData ? <Chart data={chartData} /> : null}
       </View>
-      <Text style={styles.title}>Histórico de Rendimento</Text>
-      <LineChart
-        data={{
-          labels: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"],
-          datasets: [
-            {
-              data: [0.80, 1.11, 0.97, 0.91, 0.90, 0.89, 1.02, 1.11, 0.97, 0.96, 0.84, 0.88]
-            },
-          ],
-        }}
-        width={350} // from react-native
-        height={450}
-        yAxisLabel="R$"
-        chartConfig={{
-          backgroundColor: "#61855a",
-          backgroundGradientFrom: "#61855a",
-          backgroundGradientTo: "#7ea177",
-          color: (opacity = 0.5) => `rgba(255, 255, 255, ${opacity})`,
-          labelColor: (opacity = 0.5) => `rgba(255, 255, 255, ${opacity})`,
-          style: {
-            borderRadius: 16,
-          },
-          propsForDots: {
-            r: "6",
-            strokeWidth: "2",
-            stroke: "#7ea177",
-          },
-        }}
-      />
- 
-    </View>
     </BackgroundColorProvider>
   );
 }
-
 
 const styles = StyleSheet.create({
   body: {
@@ -99,12 +77,12 @@ const styles = StyleSheet.create({
     color: "#104a07",
   },
   selecionarfundo: {
-    fontSize: 17,
+    fontSize: 14,
     fontWeight: 500,
     textAlign: "center",
     color: "#104a07",
-    fontFamily: "Roboto",
-    fontWeight: 550
+    fontFamily: "Arial",
+    fontWeight: 250,
   },
   picker: {
     margin: 10,
@@ -122,8 +100,9 @@ const styles = StyleSheet.create({
     marginVertical: 7,
     textAlign: "center",
     backgroundColor: "#7ea177",
-    padding: 10
-  }
+    padding: 20,
+    margin: 30
+  },
 });
 
 export default Graficos;

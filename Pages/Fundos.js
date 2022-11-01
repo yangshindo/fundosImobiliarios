@@ -13,24 +13,30 @@ import BackgroundColorProvider from "../Components/BackgroundColorProvider";
 import { AutocompleteDropdown } from "react-native-autocomplete-dropdown";
 
 function Fundos() {
+
+  //state do diálogo responsável por mostrar quando o usuário fez uma pesquisa que não gera retornos, fundo inexistente na DB.
   const [visible, setVisible] = useState(false);
   const showDialog = () => setVisible(true);
   const hideDialog = () => setVisible(false);
 
+
+  //state edição de cotas
   const [cotasValue, setCotasValue] = useState(1);
   const [editCotas, setEditCotas] = useState(false);
 
+
+  //context
   const { fundosDBList } = useContext(FundosContext);
   const { fundosUserList, setFundosUserList } = useContext(FundosContext);
 
-  //
+
+  //Search Bar state e funções. Componente autocomplete
   const [selectedItem, setSelectedItem] = useState(null);
 
   function itemSelectDropDown(item) {
     setSelectedItem(item);
     console.log(selectedItem);
   }
-  //
 
   function search() {
     if (selectedItem) {
@@ -44,7 +50,7 @@ function Fundos() {
           setFundosUserList((prevValue) => [...prevValue, fundoSelecionado]);
           console.log(fundosUserList);
         } else {
-          showDialog();
+          showDialog(); 
         }
       } else {
         showDialog();
@@ -52,18 +58,28 @@ function Fundos() {
     }
   }
 
+
+  //delete item
   function deleteItemById(id) {
     const filteredData = fundosUserList.filter((item) => item.title !== id);
     setFundosUserList(filteredData);
   }
 
+  //edit item
   function editItemById(id) {
-    const foundItem = fundosUserList.find((item) => item.title === id);
-    foundItem.cotas = cotasValue;
+    let newData = fundosUserList.map(el => {
+      if(el.title === id)
+         return Object.assign({}, el, {cotas: cotasValue})
+      return el
+  });
+
+setFundosUserList(newData); 
+
     setEditCotas(false);
     setCotasValue(1);
   }
 
+  //render item
   function renderItem({ item }) {
     return (
       <View style={styles.container}>
@@ -114,7 +130,7 @@ function Fundos() {
               dataSet={fundosDBList}
             />
           </View>
-          <Button onPress={search}>Adicionar Fundo</Button>
+          <Button textColor="black" icon='book-plus' onPress={search}>Adicionar Fundo</Button>
           <FlatList
             data={fundosUserList}
             renderItem={renderItem}
@@ -176,6 +192,7 @@ const styles = StyleSheet.create({
     elevation: 3, // works on android
     padding: 10,
   },
+
 });
 
 export default Fundos;
