@@ -1,6 +1,6 @@
 import { Text, View, StyleSheet, Picker } from "react-native";
 import { useState, useContext } from "react";
-import { Button, Menu } from 'react-native-paper'
+import { Button, Menu } from "react-native-paper";
 
 import { FundosContext } from "../Contexts/FundosContext";
 import BackgroundColorProvider from "../Components/BackgroundColorProvider";
@@ -10,40 +10,66 @@ function Graficos() {
   // Context
   const { fundosUserList } = useContext(FundosContext);
 
-  // Select / Picker state, render item e functional component
-  const [menuVisible, setMenuVisible] = useState(false)
+  // Select state, render item e functional component
+  const [menuVisible, setMenuVisible] = useState(false);
   const openMenu = () => setMenuVisible(true);
   const closeMenu = () => setMenuVisible(false);
   const [selectedValue, setSelectedValue] = useState(fundosUserList[0]);
-  const [chartData, setChartData] = useState()
+  const [chartData, setChartData] = useState();
 
   const menuOption = fundosUserList.map((el) => (
-    <Menu.Item title={el.title} key={el.title} onPress={() => onValueChage(el)} />
+    <Menu.Item
+      title={el.title}
+      key={el.title}
+      onPress={() => onValueChage(el)}
+    />
   ));
 
   function onValueChage(el) {
-    setSelectedValue(el)
-    const item = fundosUserList.find((i) => i === el)
-    console.log(item)
-    if (item) {setChartData([item.mes1, item.mes2, item.mes3, item.mes4, item.mes5, item.mes6])}
-    closeMenu()
+    setSelectedValue(el);
+    const item = fundosUserList.find((i) => i === el);
+    if (item) {
+      setChartData([
+        item.mes1,
+        item.mes2,
+        item.mes3,
+        item.mes4,
+        item.mes5,
+        item.mes6,
+      ]);
+    }
+    closeMenu();
   }
 
   return (
     <BackgroundColorProvider>
       <View style={styles.body}>
         <View style={styles.box}>
-          <Text style={styles.boxtext}>Selecione um fundo para acompanhar o histórico de rendimento nos últimos 6 meses </Text>
+          <Text style={styles.boxtext}>
+            Selecione um fundo para acompanhar o histórico de rendimento nos
+            últimos 6 meses{" "}
+          </Text>
           <Menu
-          visible={menuVisible}
-          onDismiss={closeMenu}
-          anchor={<Button icon={'form-select'} textColor="#104a07" buttonColor="#f8ffc7" onPress={openMenu} mode="outlined">Selecionar</Button>}>
-{menuOption}
-        </Menu>
+            visible={menuVisible}
+            onDismiss={closeMenu}
+            anchor={
+              <Button
+                icon={"form-select"}
+                textColor="#104a07"
+                buttonColor="#f8ffc7"
+                onPress={openMenu}
+                mode="outlined"
+              >
+                Selecionar
+              </Button>
+            }
+          >
+            {menuOption}
+          </Menu>
         </View>
-       
+
         <Text style={styles.title}>Histórico de Rendimento</Text>
-       
+
         {chartData ? <Chart data={chartData} /> : null}
       </View>
     </BackgroundColorProvider>
@@ -91,7 +117,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
     backgroundColor: "#7ea177",
     padding: 20,
-    margin: 30
+    margin: 30,
   },
 });
 

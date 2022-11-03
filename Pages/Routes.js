@@ -5,10 +5,15 @@ import { StyleSheet } from "react-native-web";
 import { NavigationContainer } from "@react-navigation/native";
 import { createMaterialBottomTabNavigator } from "@react-navigation/material-bottom-tabs";
 import Ionicons from "react-native-vector-icons/Ionicons";
+import { useContext } from "react";
+import { FundosContext } from "../Contexts/FundosContext";
 
 const Tab = createMaterialBottomTabNavigator();
 
 function Routes() {
+  //Context
+  const { sumValues } = useContext(FundosContext);
+
   const styles = StyleSheet.create({
     body: {
       margin: 10,
@@ -31,12 +36,12 @@ function Routes() {
               iconName = focused ? "stats-chart" : "stats-chart-outline";
             }
 
-            // You can return any component that you like here!
+            // Retorna qualquer componente desejado
             return <Ionicons name={iconName} size={25} color={color} />;
           },
         })}
       >
-        <Tab.Screen name={"Home"} component={Home}/>
+        <Tab.Screen name={"Home"} component={Home} onPress={sumValues()} />
         <Tab.Screen name={"Fundos"} component={Fundos} />
         <Tab.Screen name={"Gráficos"} component={Graficos} />
       </Tab.Navigator>

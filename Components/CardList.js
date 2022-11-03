@@ -1,43 +1,42 @@
 import { useContext } from "react";
 import { View, FlatList, StyleSheet, Text } from "react-native";
 import { FundosContext } from "../Contexts/FundosContext";
-import { useState } from 'react'
+import { useState } from "react";
 
 function CardList() {
   const { fundosUserList } = useContext(FundosContext);
-  
 
-
-  var formatter = new Intl.NumberFormat("pt-BR", {
+  const formatter = new Intl.NumberFormat("pt-BR", {
     style: "currency",
     currency: "BRL",
   });
 
-  function Item (props) {
-
-
-     return (
-    <View style={styles.container}>
-      <View style={styles.row}>
-        <Text style={styles.nome}>{props.title}</Text>
-        <Text style={styles.recebidoValue}>
-          {formatter.format(props.cotas * props.rendimento)}
-        </Text>
-      </View>
-      <View style={styles.row}>
-        <View style={styles.column}>
-        <Text style={styles.rendimento}>
-          Rendimento 
-        </Text>
-        <Text>{formatter.format(props.rendimento)}</Text>
+  function Item(props) {
+    return (
+      <View style={styles.container}>
+        <View style={styles.row}>
+          <Text style={styles.nome}>{props.title}</Text>
+          <Text style={styles.recebidoValue}>
+            {formatter.format(props.cotas * props.rendimento)}
+          </Text>
         </View>
-        {props.pago === 1 ? <Text style={styles.recebidoText}>RECEBIDO</Text> : <Text style={styles.aguardandoText}>NÃO RECEBIDO</Text>}
+        <View style={styles.row}>
+          <View style={styles.column}>
+            <Text style={styles.rendimento}>Rendimento</Text>
+            <Text>{formatter.format(props.rendimento)}</Text>
+          </View>
+          {props.pago === 1 ? (
+            <Text style={styles.recebidoText}>RECEBIDO</Text>
+          ) : (
+            <Text style={styles.aguardandoText}>NÃO RECEBIDO</Text>
+          )}
+        </View>
+        <View>
+          <Text style={styles.detalhesText}>Mais Detalhes</Text>
+        </View>
       </View>
-      <View>
-        <Text style={styles.detalhesText}>Mais Detalhes</Text>
-      </View>
-    </View>
-  );}
+    );
+  }
 
   const renderItem = ({ item }) => (
     <Item
@@ -104,7 +103,7 @@ function CardList() {
       backgroundColor: "#FEF9A7",
       fontWeight: "600",
       color: "#303030",
-      padding: 3
+      padding: 3,
     },
   });
 

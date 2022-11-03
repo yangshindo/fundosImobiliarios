@@ -13,51 +13,43 @@ import BackgroundColorProvider from "../Components/BackgroundColorProvider";
 import { AutocompleteDropdown } from "react-native-autocomplete-dropdown";
 
 function Fundos() {
-
   //state do diálogo responsável por mostrar quando o usuário fez uma pesquisa que não gera retornos, fundo inexistente na DB.
   const [visible, setVisible] = useState(false);
   const showDialog = () => setVisible(true);
   const hideDialog = () => setVisible(false);
 
-
   //state edição de cotas
   const [cotasValue, setCotasValue] = useState(1);
   const [editCotas, setEditCotas] = useState(false);
 
-
   //context
   const { fundosDBList } = useContext(FundosContext);
   const { fundosUserList, setFundosUserList } = useContext(FundosContext);
-
 
   //Search Bar state e funções. Componente autocomplete
   const [selectedItem, setSelectedItem] = useState(null);
 
   function itemSelectDropDown(item) {
     setSelectedItem(item);
-    console.log(selectedItem);
   }
 
   function search() {
     if (selectedItem) {
-      if (!fundosUserList.includes(selectedItem)) {
+      const foundItem = fundosUserList.find(
+        (item) => item.title === selectedItem.title
+      );
+      if (foundItem) {
+        showDialog();
+      } else {
         const fundoSelecionado = fundosDBList.find(
           (item) => item.title === selectedItem.title
         );
         if (fundoSelecionado) {
-          if (!fundosUserList.includes(fundoSelecionado)) {
-          }
           setFundosUserList((prevValue) => [...prevValue, fundoSelecionado]);
-          console.log(fundosUserList);
-        } else {
-          showDialog(); 
-        }
-      } else {
-        showDialog();
       }
     }
   }
-
+}
 
   //delete item
   function deleteItemById(id) {
@@ -67,13 +59,12 @@ function Fundos() {
 
   //edit item
   function editItemById(id) {
-    let newData = fundosUserList.map(el => {
-      if(el.title === id)
-         return Object.assign({}, el, {cotas: cotasValue})
-      return el
-  });
+    let newData = fundosUserList.map((el) => {
+      if (el.title === id) return Object.assign({}, el, { cotas: cotasValue });
+      return el;
+    });
 
-setFundosUserList(newData); 
+    setFundosUserList(newData);
 
     setEditCotas(false);
     setCotasValue(1);
@@ -130,7 +121,9 @@ setFundosUserList(newData);
               dataSet={fundosDBList}
             />
           </View>
-          <Button textColor="black" icon='book-plus' onPress={search}>Adicionar Fundo</Button>
+          <Button textColor="black" icon="book-plus" onPress={search}>
+            Adicionar Fundo
+          </Button>
           <FlatList
             data={fundosUserList}
             renderItem={renderItem}
@@ -192,7 +185,6 @@ const styles = StyleSheet.create({
     elevation: 3, // works on android
     padding: 10,
   },
-
 });
 
 export default Fundos;

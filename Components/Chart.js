@@ -2,28 +2,20 @@ import { LineChart } from "react-native-chart-kit";
 import { View } from "react-native";
 
 function Chart(props) {
-
-  let data = props.data
+  let data = props.data;
 
   return (
     <View>
       <LineChart
         data={{
-          labels: [
-            "1",
-            "2",
-            "3",
-            "4",
-            "5",
-            "6"
-          ],
+          labels: ["1", "2", "3", "4", "5", "6"],
           datasets: [
             {
-              data: data
+              data: data,
             },
           ],
         }}
-        width={350} 
+        width={350}
         height={450}
         yAxisLabel="R$"
         chartConfig={{
