@@ -1,4 +1,4 @@
-import { Text, View, StyleSheet, Picker } from "react-native";
+import { Text, View, StyleSheet } from "react-native";
 import { useState, useContext } from "react";
 import { Button, Menu } from "react-native-paper";
 

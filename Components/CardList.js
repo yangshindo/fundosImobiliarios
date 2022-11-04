@@ -2,6 +2,8 @@ import { useContext } from "react";
 import { View, FlatList, StyleSheet, Text } from "react-native";
 import { FundosContext } from "../Contexts/FundosContext";
 import { useState } from "react";
+import Icon from "@expo/vector-icons/MaterialCommunityIcons";
+
 
 function CardList() {
   const { fundosUserList } = useContext(FundosContext);
@@ -32,7 +34,7 @@ function CardList() {
           )}
         </View>
         <View>
-          <Text style={styles.dataComText}>Data com: dia {props.datacom}</Text>
+          <Text style={styles.dataComText}><Icon name="calendar" size={16} /> Data com: dia {props.datacom}</Text>
         </View>
       </View>
     );
