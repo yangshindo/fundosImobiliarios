@@ -17,6 +17,7 @@ function FundosContextProvider(props) {
       mes4: 1.33,
       mes5: 0.7,
       mes6: 0.4,
+      datacom: 4
     },
     {
       id: 2,
@@ -31,6 +32,7 @@ function FundosContextProvider(props) {
       mes4: 0.3,
       mes5: 0.1,
       mes6: 0.4,
+      datacom: 12
     },
     {
       id: 3,
@@ -45,6 +47,7 @@ function FundosContextProvider(props) {
       mes4: 2.3,
       mes5: 2,
       mes6: 1.4,
+      datacom: 20
     },
   ]);
 
@@ -62,6 +65,7 @@ function FundosContextProvider(props) {
       mes4: 1.33,
       mes5: 0.7,
       mes6: 0.4,
+      datacom: 4
     },
     {
       id: 2,
@@ -76,6 +80,7 @@ function FundosContextProvider(props) {
       mes4: 0.3,
       mes5: 0,
       mes6: 0.4,
+      datacom: 12
     },
   ]);
 

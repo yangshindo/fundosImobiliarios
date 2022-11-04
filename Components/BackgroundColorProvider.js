@@ -1,7 +1,11 @@
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, View, ImageBackground } from "react-native";
 
 const BackgroundColorProvider = ({ children }) => {
-  return <View style={styles.container}>{children}</View>;
+  return (
+  <ImageBackground source={"https://imgur.com/0PNVcwH.png"}  style={{width: '100%', height: '100%'}}>
+      {children}
+    </ImageBackground>
+    )
 };
 
 const styles = StyleSheet.create({

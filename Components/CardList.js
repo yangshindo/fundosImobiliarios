@@ -32,7 +32,7 @@ function CardList() {
           )}
         </View>
         <View>
-          <Text style={styles.detalhesText}>Mais Detalhes</Text>
+          <Text style={styles.dataComText}>Data com: dia {props.datacom}</Text>
         </View>
       </View>
     );
@@ -45,6 +45,7 @@ function CardList() {
       recebido={item.recebido}
       pago={item.pago}
       cotas={item.cotas}
+      datacom={item.datacom}
     />
   );
 
@@ -99,9 +100,9 @@ function CardList() {
       borderRadius: 4,
       padding: 2,
     },
-    detalhesText: {
+    dataComText: {
       backgroundColor: "#FEF9A7",
-      fontWeight: "600",
+      fontWeight: "500",
       color: "#303030",
       padding: 3,
     },

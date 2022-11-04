@@ -51,6 +51,8 @@ function Graficos() {
           </Text>
           <Menu
             visible={menuVisible}
+            style={styles.menuOutside}
+            contentStyle={styles.menuInside}
             onDismiss={closeMenu}
             anchor={
               <Button
@@ -119,6 +121,15 @@ const styles = StyleSheet.create({
     padding: 20,
     margin: 30,
   },
+  menuOutside: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    paddingTop: 50,
+    paddingLeft: 85
+  },
+  menuInside: {
+    backgroundColor: "#f8ffc7",
+  }
 });
 
 export default Graficos;
