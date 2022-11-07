@@ -1,12 +1,16 @@
-import { useState, createContext } from "react";
+import { useState, createContext, useEffect } from "react";
+import AsyncStorage from '@react-native-community/async-storage';
+
 
 export const FundosContext = createContext();
 
 function FundosContextProvider(props) {
+
+  //placeholder dos dados oriundos da API de fundos imobiliários
   const [fundosDBList, setFundosDBList] = useState([
     {
       id: 1,
-      title: "BLMG11",
+      title: 'BLMG11',
       rendimento: 0.84,
       recebido: 25.2,
       cotas: 30,
@@ -21,7 +25,7 @@ function FundosContextProvider(props) {
     },
     {
       id: 2,
-      title: "CPTS11",
+      title: 'CPTS11',
       rendimento: 1.1,
       recebido: 1.1,
       cotas: 1,
@@ -36,7 +40,7 @@ function FundosContextProvider(props) {
     },
     {
       id: 3,
-      title: "HGRU11",
+      title: 'HGRU11',
       rendimento: 0.82,
       recebido: 1.64,
       cotas: 2,
@@ -51,6 +55,8 @@ function FundosContextProvider(props) {
     },
   ]);
 
+
+  //fundos personalizados do usuário
   const [fundosUserList, setFundosUserList] = useState([
     {
       id: 1,
@@ -84,7 +90,16 @@ function FundosContextProvider(props) {
     },
   ]);
 
-  const [titleValue, setTitleValue] = useState("0,00");
+  //valor somado que fica no título do app na home
+  const [titleValue, setTitleValue] = useState('0,00');
+
+
+  //alinhando o context com o asyncstorage (dados locais persistentes)
+
+  useEffect(() => {
+    AsyncStorage.setItem('FUNDOSUSERLIST_VALUE', fundosUserList.toString());
+  }, [fundosUserList]);
+  
 
   //função para somar valores de todos os fundos para exibir no título da tela principal
   function sumValues() {
