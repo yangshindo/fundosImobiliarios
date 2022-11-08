@@ -1,5 +1,5 @@
 import { useState, createContext, useEffect } from "react";
-import AsyncStorage from '@react-native-community/async-storage';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 export const FundosContext = createContext();
@@ -97,7 +97,9 @@ function FundosContextProvider(props) {
   //alinhando o context com o asyncstorage (dados locais persistentes)
 
   useEffect(() => {
-    AsyncStorage.setItem('FUNDOSUSERLIST_VALUE', fundosUserList.toString());
+    console.log(fundosUserList)
+    const jsonValue = JSON.stringify(fundosUserList)
+    AsyncStorage.setItem('FUNDOSUSERLIST_VALUE', jsonValue);
   }, [fundosUserList]);
   
 

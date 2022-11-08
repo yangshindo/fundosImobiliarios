@@ -3,10 +3,12 @@ import { Provider as PaperProvider } from "react-native-paper";
 import { useEffect } from "react";
 import FundosContextProvider from "./Contexts/FundosContext";
 import Routes from "./Pages/Routes";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 export default function App() {
   
+
   useEffect(() => {
     AsyncStorage.getItem('FUNDOSUSERLIST_VALUE').then((value) => {
       if (value) {
