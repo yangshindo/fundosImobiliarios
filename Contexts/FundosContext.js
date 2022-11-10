@@ -1,16 +1,24 @@
 import { useState, createContext, useEffect } from "react";
-import AsyncStorage from '@react-native-async-storage/async-storage';
-
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { db } from '../Firebase/firebaseConfig'
+import { set, ref, onValue, remove, update } from "firebase/database";
 
 export const FundosContext = createContext();
 
 function FundosContextProvider(props) {
+  
+  function getDBData() {
+    onValue(ref(db), (snapshot) => {
+      const data = snapshot.val();
+      console.log(data)
+    });
+  }
 
   //placeholder dos dados oriundos da API de fundos imobiliários
   const [fundosDBList, setFundosDBList] = useState([
     {
       id: 1,
-      title: 'BLMG11',
+      title: "BLMG11",
       rendimento: 0.84,
       recebido: 25.2,
       cotas: 30,
@@ -21,11 +29,11 @@ function FundosContextProvider(props) {
       mes4: 1.33,
       mes5: 0.7,
       mes6: 0.4,
-      datacom: 4
+      datacom: 4,
     },
     {
       id: 2,
-      title: 'CPTS11',
+      title: "CPTS11",
       rendimento: 1.1,
       recebido: 1.1,
       cotas: 1,
@@ -36,11 +44,11 @@ function FundosContextProvider(props) {
       mes4: 0.3,
       mes5: 0.1,
       mes6: 0.4,
-      datacom: 12
+      datacom: 12,
     },
     {
       id: 3,
-      title: 'HGRU11',
+      title: "HGRU11",
       rendimento: 0.82,
       recebido: 1.64,
       cotas: 2,
@@ -51,10 +59,9 @@ function FundosContextProvider(props) {
       mes4: 2.3,
       mes5: 2,
       mes6: 1.4,
-      datacom: 20
+      datacom: 20,
     },
   ]);
-
 
   //fundos personalizados do usuário
   const [fundosUserList, setFundosUserList] = useState([
@@ -71,7 +78,7 @@ function FundosContextProvider(props) {
       mes4: 1.33,
       mes5: 0.7,
       mes6: 0.4,
-      datacom: 4
+      datacom: 4,
     },
     {
       id: 2,
@@ -86,22 +93,20 @@ function FundosContextProvider(props) {
       mes4: 0.3,
       mes5: 0,
       mes6: 0.4,
-      datacom: 12
+      datacom: 12,
     },
   ]);
 
   //valor somado que fica no título do app na home
-  const [titleValue, setTitleValue] = useState('0,00');
-
+  const [titleValue, setTitleValue] = useState("0,00");
 
   //alinhando o context com o asyncstorage (dados locais persistentes)
 
   useEffect(() => {
-    console.log(fundosUserList)
-    const jsonValue = JSON.stringify(fundosUserList)
-    AsyncStorage.setItem('FUNDOSUSERLIST_VALUE', jsonValue);
+    getDBData()
+    const jsonValue = JSON.stringify(fundosUserList);
+    AsyncStorage.setItem("FUNDOSUSERLIST_VALUE", jsonValue);
   }, [fundosUserList]);
-  
 
   //função para somar valores de todos os fundos para exibir no título da tela principal
   function sumValues() {
