@@ -13,6 +13,7 @@ import BackgroundColorProvider from "../Components/BackgroundColorProvider";
 import { AutocompleteDropdown } from "react-native-autocomplete-dropdown";
 
 function Fundos() {
+
   //state do diálogo responsável por mostrar quando o usuário fez uma pesquisa que não gera retornos, fundo inexistente na DB.
   const [visible, setVisible] = useState(false);
   const showDialog = () => setVisible(true);

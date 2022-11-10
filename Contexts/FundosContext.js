@@ -6,96 +6,47 @@ import { set, ref, onValue, remove, update } from "firebase/database";
 export const FundosContext = createContext();
 
 function FundosContextProvider(props) {
+
+  const [lastUpdate, setLastUpdate] = useState()
   
+  //Importa todos os dados da Firebase (Realtime) e salva no asyncstorage para diminuir requests na API
   function getDBData() {
     onValue(ref(db), (snapshot) => {
       const data = snapshot.val();
-      console.log(data)
+      const dataArray = []
+      for (let s in data) {
+        for (let ss in data[s])
+          dataArray.push(data[s][ss]);
+      }
+      setFundosDBList(dataArray)
+      const jsonValueDB = JSON.stringify(fundosDBList)
+      AsyncStorage.setItem("FUNDOSDBLIST_VALUE", jsonValueDB)
     });
   }
 
+
+  // DEBUG THIS
+  function updateDB() {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    console.log(today)
+    if (!lastUpdate) {
+      setLastUpdate(today)
+      return true
+    } else {
+      if (lastUpdate < today) {
+        return true
+      } else {
+        return false
+      }
+    }
+  }
+
   //placeholder dos dados oriundos da API de fundos imobiliários
-  const [fundosDBList, setFundosDBList] = useState([
-    {
-      id: 1,
-      title: "BLMG11",
-      rendimento: 0.84,
-      recebido: 25.2,
-      cotas: 30,
-      pago: 1,
-      mes1: 1,
-      mes2: 1.2,
-      mes3: 1.22,
-      mes4: 1.33,
-      mes5: 0.7,
-      mes6: 0.4,
-      datacom: 4,
-    },
-    {
-      id: 2,
-      title: "CPTS11",
-      rendimento: 1.1,
-      recebido: 1.1,
-      cotas: 1,
-      pago: 1,
-      mes1: 0.2,
-      mes2: 0.2,
-      mes3: 0.2,
-      mes4: 0.3,
-      mes5: 0.1,
-      mes6: 0.4,
-      datacom: 12,
-    },
-    {
-      id: 3,
-      title: "HGRU11",
-      rendimento: 0.82,
-      recebido: 1.64,
-      cotas: 2,
-      pago: 0,
-      mes1: 0.7,
-      mes2: 0.2,
-      mes3: 0.9,
-      mes4: 2.3,
-      mes5: 2,
-      mes6: 1.4,
-      datacom: 20,
-    },
-  ]);
+  const [fundosDBList, setFundosDBList] = useState([]);
 
   //fundos personalizados do usuário
-  const [fundosUserList, setFundosUserList] = useState([
-    {
-      id: 1,
-      title: "BLMG11",
-      rendimento: 0.84,
-      recebido: 25.2,
-      cotas: 30,
-      pago: 1,
-      mes1: 1,
-      mes2: 1.2,
-      mes3: 1.22,
-      mes4: 1.33,
-      mes5: 0.7,
-      mes6: 0.4,
-      datacom: 4,
-    },
-    {
-      id: 2,
-      title: "CPTS11",
-      rendimento: 1.1,
-      recebido: 1.1,
-      cotas: 1,
-      pago: 1,
-      mes1: 0.2,
-      mes2: 0.2,
-      mes3: 0.2,
-      mes4: 0.3,
-      mes5: 0,
-      mes6: 0.4,
-      datacom: 12,
-    },
-  ]);
+  const [fundosUserList, setFundosUserList] = useState([]);
 
   //valor somado que fica no título do app na home
   const [titleValue, setTitleValue] = useState("0,00");
@@ -103,18 +54,17 @@ function FundosContextProvider(props) {
   //alinhando o context com o asyncstorage (dados locais persistentes)
 
   useEffect(() => {
+ 
     getDBData()
-    const jsonValue = JSON.stringify(fundosUserList);
-    AsyncStorage.setItem("FUNDOSUSERLIST_VALUE", jsonValue);
+    const jsonValueUser = JSON.stringify(fundosUserList);
+    AsyncStorage.setItem("FUNDOSUSERLIST_VALUE", jsonValueUser);
   }, [fundosUserList]);
 
   //função para somar valores de todos os fundos para exibir no título da tela principal
   function sumValues() {
     const sumArray = [];
     fundosUserList.map((item) => {
-      if (item.pago === 1) {
         sumArray.push(item.cotas * item.rendimento);
-      }
     });
     const sum = sumArray.reduce((partialSum, a) => partialSum + a, 0);
     setTitleValue(sum);

@@ -13,6 +13,9 @@ function CardList() {
     currency: "BRL",
   });
 
+  const d = new Date();
+  const currentDay = d.getDate()
+
   function Item(props) {
     return (
       <View style={styles.container}>
@@ -27,7 +30,7 @@ function CardList() {
             <Text style={styles.rendimento}>Rendimento</Text>
             <Text>{formatter.format(props.rendimento)}</Text>
           </View>
-          {props.pago === 1 ? (
+          { props.datacom <= currentDay ? (
             <Text style={styles.recebidoText}>RECEBIDO</Text>
           ) : (
             <Text style={styles.aguardandoText}>NÃO RECEBIDO</Text>
