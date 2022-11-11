@@ -4,12 +4,11 @@ import BackgroundColorProvider from "../Components/BackgroundColorProvider";
 import Icon from "@expo/vector-icons/MaterialCommunityIcons";
 import { useContext, useEffect } from "react";
 import { FundosContext } from "../Contexts/FundosContext";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 function Home() {
   //Context
-  const { titleValue, sumValues, fundosUserList, setFundosUserList, setFundosDBList } =
-    useContext(FundosContext);
+  const { titleValue, sumValues, setLastUpdate, setFundosUserList } = useContext(FundosContext);
 
   //Date (mês atual)
   const d = new Date();
@@ -21,20 +20,13 @@ function Home() {
 
   //useEffect
   useEffect(() => {
-    if (fundosUserList.length > 0) {
-      sumValues();
-      AsyncStorage.getItem("FUNDOSUSERLIST_VALUE").then((value) => {
-        if (value) {
-          //value é string, por isso transformamos em objeto abaixo
-          setFundosUserList(JSON.parse(value));
-        }
-      });
-      AsyncStorage.getItem("FUNDOSDBLIST_VALUE").then((value) => {
-        if (value) {
-          setFundosDBList(JSON.parse(value));
-        }
-      });
-    }
+    sumValues();
+    AsyncStorage.getItem('FUNDOSUSERLIST_VALUE').then((value) => {
+      if (value) {
+        //value é string, por isso transformamos em objeto abaixo
+        setFundosUserList(JSON.parse(value)) 
+      }
+    });
   }, []);
 
   //currency format

@@ -1,12 +1,11 @@
 import {
-APIKEY,
-AUTHDOMAIN,
-PROJECTID,
-STORAGEBUCKET,
-MESSAGINGSENDERID,
-APPID
-}
-from "@env"
+  APIKEY,
+  AUTHDOMAIN,
+  PROJECTID,
+  STORAGEBUCKET,
+  MESSAGINGSENDERID,
+  APPID,
+} from "@env";
 
 import { initializeApp } from "firebase/app";
 import { getDatabase } from "firebase/database";
